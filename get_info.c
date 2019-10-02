@@ -6,7 +6,7 @@
 /*   By: yxie <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 10:38:34 by yxie              #+#    #+#             */
-/*   Updated: 2019/09/27 09:11:25 by yxie             ###   ########.fr       */
+/*   Updated: 2019/10/02 12:46:48 by yxie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include <sys/xattr.h>
 
 #include <sys/acl.h>
-
+#include <libc.h>
 void ft_putchar(char c)
 {
 	write(1, &c, 1);
@@ -137,5 +137,16 @@ int main(int argc, char **argv)
 	if ((len = readlink(filename_2, buf, sizeof(buf)-1)) != -1)
     	buf[len] = '\0';
 	printf("symbolic link: %s\n", buf);
+
+	int             ret;
+    struct stat     bur;
+
+	ret = stat(".", &bur);
+	if (ret < 0)
+	{
+		printf("stat failed, errno");
+		exit(0);
+	}
+	printf("File system block size is = %d\n",bur.st_blksize);
 	return 0;
 }
